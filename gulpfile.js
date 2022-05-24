@@ -33,5 +33,13 @@ function scss() {
     .pipe(debug({title: 'scss dest:'}));
 }
 
+/**
+ * watchタスクで実行する関数
+ */
+function watch() {
+  return gulp.watch(paths.scss.src, gulp.series(scss))
+}
+
 exports.scss = scss; // scssタスク
+exports.watch = watch; // watchタスク
 exports.default = gulp.series(scss); // defaultタスク
