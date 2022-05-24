@@ -1,0 +1,1 @@
+{"version":3,"sources":["home.scss","home.css"],"names":[],"mappings":"AACA;EACE,eAAA;ACAF","file":"../home.css","sourcesContent":["// Home - home.scss\nbody {\n  font-size: 2rem;\n}\n","body {\n  font-size: 2rem;\n}"]}

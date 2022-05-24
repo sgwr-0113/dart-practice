@@ -1,0 +1,8 @@
+// Layout - layout.scss
+@use "variable" as vars;
+
+body {
+  font-size: 1.6rem;
+  color: vars.$font_color;
+  background: vars.$bg_color;
+}
