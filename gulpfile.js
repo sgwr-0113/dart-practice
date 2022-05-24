@@ -2,9 +2,12 @@ const gulp = require('gulp');
 const notify = require('gulp-notify');  // エラー通知
 const plumber = require('gulp-plumber'); // エラー時のタスク停止防止
 const debug = require('gulp-debug'); // ログ表示
+
 const dartSass = require('gulp-dart-sass');
 const autoprefixer = require('gulp-autoprefixer'); // ベンダープレフィックス付与
 const sourcemaps = require('gulp-sourcemaps'); // ソースマップ出力
+
+const cached  = require('gulp-cached'); // ファイルキャッシュ
 
 const paths = {
   scss: {
@@ -21,6 +24,7 @@ function scss() {
     .pipe(plumber({
       errorHandler: notify.onError('Error: <%= error.message %>')
     }))
+    .pipe(cached('scss')) // ファイルをキャッシュ
     .pipe(sourcemaps.init())
     .pipe(dartSass({
       outputStyle: 'expanded'
@@ -34,6 +38,15 @@ function scss() {
 }
 
 /**
+ * scssファイルをキャッシュする関数
+ */
+function scssCache(){
+  return gulp.src(paths.scss.src)
+    .pipe(cached('scss')) // ファイルをキャッシュさせる
+    .pipe(debug({title: 'scss cached:'}));
+}
+
+/**
  * watchタスクで実行する関数
  */
 function watch() {
@@ -41,5 +54,5 @@ function watch() {
 }
 
 exports.scss = scss; // scssタスク
-exports.watch = watch; // watchタスク
+exports.watch = gulp.series(scssCache, watch); // watchタスク
 exports.default = gulp.series(scss); // defaultタスク
